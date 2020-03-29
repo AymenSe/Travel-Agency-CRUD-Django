@@ -1,1 +1,2 @@
+"pip install django-phone-field" =
 "django-countries 6.1.2"  =

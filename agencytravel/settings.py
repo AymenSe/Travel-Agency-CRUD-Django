@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'django_countries', # special for add countries filed selector
+    # 'phone_field', special for add phone field 
   #  'crispy_forms',
   #  'rest_framework',
    # 'multiselectfield',

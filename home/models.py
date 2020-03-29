@@ -8,6 +8,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
+# from phone_field import PhoneField
+
 
 
 
@@ -256,3 +258,23 @@ class Visa(models.Model):
 #     class Meta:
 #         managed = True
 #         db_table = 'visa_request_form'
+
+
+class Inquiry(models.Model):
+    first_name = models.CharField(max_length=45)
+    last_name = models.CharField(max_length=45)
+    phone = models.CharField(max_length=45)
+    facebook = models.CharField(max_length=45, blank=True, null=True)
+    email = models.EmailField(max_length=254, blank=True, null=True)
+    Service = models.CharField(max_length=45)
+    inquirycol = models.CharField(max_length=50)
+    answered = models.BooleanField()
+    comments = models.TextField(blank=True, null=True) 
+
+
+    class Meta:
+        managed = True
+        db_table = 'inquiry'
+
+    def __str__(self):
+        return f'inquiry of client {self.first_name} {self.last_name}'
