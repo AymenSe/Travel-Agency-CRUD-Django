@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.viewsets import ModelViewSet #, GenericViewSet
+# from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from home.models import *
 from home.serializers import *
 
-# Create your views here.
 
+# ---- views ---- #
 
 def index(request):
     return render(request, "index.html", context={})
