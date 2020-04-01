@@ -32,6 +32,7 @@ class CancelService(models.Model):
     id_user = models.ForeignKey(User, models.DO_NOTHING, db_column='id_user')
     penalty = models.PositiveIntegerField(blank=True, null=True)
     comment = models.TextField(db_column='Comment', blank=True, null=True)  # Field name made lowercase.
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -42,6 +43,7 @@ class CancelService(models.Model):
 class Refund(models.Model):
     amount = models.PositiveIntegerField(blank=True, null=True)
     cancel_service_id = models.OneToOneField("CancelService", models.DO_NOTHING, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -60,6 +62,7 @@ class Client(models.Model):
     e_mail_fabebook = models.CharField(db_column='E-mail/Fabebook', unique=True, max_length=45)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     date_place_of_birth = models.CharField(db_column='Date/Place_of_Birth', max_length=45)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     user_iduser = models.ForeignKey(User, models.DO_NOTHING, db_column='User_idUser')  # Field name made lowercase.
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -74,6 +77,7 @@ class Client(models.Model):
 class Insurance(models.Model):
     # id = models.PositiveIntegerField(primary_key=True)
     number = models.PositiveIntegerField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -97,6 +101,7 @@ class Omra(models.Model):
     area = models.CharField(max_length=45, blank=True, null=True)
     distance_from_haram = models.PositiveIntegerField(blank=True, null=True)
     room_size = models.PositiveIntegerField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -109,6 +114,7 @@ class OrganizedJourney(models.Model):
     duration = models.PositiveIntegerField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     room_type = models.PositiveIntegerField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -119,6 +125,7 @@ class Other(models.Model):
     # id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=45, blank=True, null=True)
     details = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -131,6 +138,7 @@ class Payment(models.Model):
     date = models.DateField()
     id_service = models.ForeignKey('Service', models.DO_NOTHING, db_column='id_service')
     user_iduser = models.ForeignKey(User, models.DO_NOTHING, db_column='User_idUser')  # Field name made lowercase.
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -154,6 +162,7 @@ class Service(models.Model):
     visa_rdv = models.BooleanField(blank=True, null=True)
     visa_request_form = models.BooleanField(blank=True, null=True)
     client = models.ManyToManyField("Client")
+    is_active = models.BooleanField(default=True)
 
 
     class Meta:
@@ -180,6 +189,8 @@ class Service(models.Model):
 class TempHotelReservation(models.Model):
 #   id = models.PositiveIntegerField(primary_key=True)
     type_of = models.CharField(max_length=7)
+    is_active = models.BooleanField(default=True)
+
 
     class Meta:
         managed = True
@@ -205,6 +216,7 @@ class Ticket(models.Model):
     ]
     type_of = models.CharField(max_length=45, choices=TICKET_CHOICES, default=ADDTK)  # ++++++++ 
     number = models.PositiveIntegerField(unique=True) # رمز التذكرة 
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -217,6 +229,7 @@ class TravelHotelReservation(models.Model):
     country = CountryField(blank_label='(إختر الدولة)')  # ++++++++++++++++++
     City = models.CharField(max_length=45) # ++++++++++++++++++
     reservation_number = models.PositiveIntegerField(unique=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -238,6 +251,7 @@ class Visa(models.Model):
     duration = models.PositiveIntegerField(blank=True, null=True)
     single_voyage_field = models.PositiveIntegerField(db_column='single_voyage?', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
     country = CountryField(blank_label='(إختر الدولة)', default='PS') # ++++++++++++++++++
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -270,6 +284,7 @@ class Inquiry(models.Model):
     inquirycol = models.CharField(max_length=50)
     answered = models.BooleanField()
     comments = models.TextField(blank=True, null=True) 
+    is_active = models.BooleanField(default=True)
 
 
     class Meta:
