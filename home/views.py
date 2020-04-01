@@ -5,16 +5,12 @@ from home.models import *
 from home.serializers import *
 
 
-<<<<<<< HEAD
-# ---- views ---- #
-=======
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 # Create your views here.
->>>>>>> api
 
 def index(request):
     return render(request, "index.html", context={})
