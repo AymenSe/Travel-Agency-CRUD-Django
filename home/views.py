@@ -5,16 +5,14 @@ from home.models import *
 from home.serializers import *
 
 
-<<<<<<< HEAD
 # ---- views ---- #
-=======
+
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 # Create your views here.
->>>>>>> api
 
 def index(request):
     return render(request, "index.html", context={})
@@ -272,6 +270,374 @@ class OrganizedJourneyDetail(APIView):
 
 
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+
+# Other API
+class OtherList(APIView):
+    """
+    List all Others, or create a new Other.
+    """
+    def get(self, request, format=None):
+        other = Other.objects.filter(is_active=True)
+        serializer = OtherSerializer(other, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = OtherSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class OtherDetail(APIView):
+    """
+    Retrieve, update or delete a Other instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Other.objects.get(pk=pk)
+        except Other.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        other = self.get_object(pk)
+        if other.is_active == False:
+            content = {'please move along': 'nothing to see here'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        serializer = OtherSerializer(other)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        other = self.get_object(pk)
+        serializer = OtherSerializer(other, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        other = self.get_object(pk)
+        if other.is_active == True: 
+            other.is_active = False
+            other.save()
+        serializer = OtherSerializer(other, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        print(serializer.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+ 
+# ------------ Fin Other API
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+# TempHotelReservation API
+class TempHotelReservationList(APIView):
+    """
+    List all TempHotelReservations, or create a new TempHotelReservation.
+    """
+    def get(self, request, format=None):
+        temp_hotel_reservation = TempHotelReservation.objects.filter(is_active=True)
+        serializer = TempHotelReservationSerializer(temp_hotel_reservation, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = TempHotelReservationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class TempHotelReservationDetail(APIView):
+    """
+    Retrieve, update or delete a TempHotelReservation instance.
+    """
+    def get_object(self, pk):
+        try:
+            return TempHotelReservation.objects.get(pk=pk)
+        except TempHotelReservation.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        temp_hotel_reservation = self.get_object(pk)
+        if temp_hotel_reservation.is_active == False:
+            content = {'please move along': 'nothing to see here'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        serializer = TempHotelReservationSerializer(temp_hotel_reservation)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        temp_hotel_reservation = self.get_object(pk)
+        serializer = TempHotelReservationSerializer(temp_hotel_reservation, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        temp_hotel_reservation = self.get_object(pk)
+        if temp_hotel_reservation.is_active == True: 
+            temp_hotel_reservation.is_active = False
+            temp_hotel_reservation.save()
+        serializer = TempHotelReservationSerializer(temp_hotel_reservation, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        print(serializer.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+ 
+# ------------ Fin TempHotelReservation API
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+# Ticket API
+class TicketList(APIView):
+    """
+    List all Tickets, or create a new Ticket.
+    """
+    def get(self, request, format=None):
+        ticket = Ticket.objects.filter(is_active=True)
+        serializer = TicketSerializer(ticket, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = TicketSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class TicketDetail(APIView):
+    """
+    Retrieve, update or delete a Ticket instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Ticket.objects.get(pk=pk)
+        except Ticket.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        ticket = self.get_object(pk)
+        if ticket.is_active == False:
+            content = {'please move along': 'nothing to see here'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        serializer = TicketSerializer(ticket)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        ticket = self.get_object(pk)
+        serializer = TicketSerializer(ticket, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        ticket = self.get_object(pk)
+        if ticket.is_active == True: 
+            ticket.is_active = False
+            ticket.save()
+        serializer = TicketSerializer(ticket, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        print(serializer.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+ 
+# ------------ Fin Ticket API
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+# TravelHotelReservation API
+class TravelHotelReservationList(APIView):
+    """
+    List all TravelHotelReservations, or create a new TravelHotelReservation.
+    """
+    def get(self, request, format=None):
+        travel_hotel_reservation = TravelHotelReservation.objects.filter(is_active=True)
+        serializer = TravelHotelReservationSerializer(travel_hotel_reservation, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = TravelHotelReservationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class TravelHotelReservationDetail(APIView):
+    """
+    Retrieve, update or delete a TravelHotelReservation instance.
+    """
+    def get_object(self, pk):
+        try:
+            return TravelHotelReservation.objects.get(pk=pk)
+        except TravelHotelReservation.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        travel_hotel_reservation = self.get_object(pk)
+        if travel_hotel_reservation.is_active == False:
+            content = {'please move along': 'nothing to see here'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        serializer = TravelHotelReservationSerializer(travel_hotel_reservation)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        travel_hotel_reservation = self.get_object(pk)
+        serializer = TravelHotelReservationSerializer(travel_hotel_reservation, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        travel_hotel_reservation = self.get_object(pk)
+        if travel_hotel_reservation.is_active == True: 
+            travel_hotel_reservation.is_active = False
+            travel_hotel_reservation.save()
+        serializer = TravelHotelReservationSerializer(travel_hotel_reservation, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        print(serializer.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+ 
+# ------------ Fin TravelHotelReservation API
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Visa API
+class VisaList(APIView):
+    """
+    List all Visas, or create a new Visa.
+    """
+    def get(self, request, format=None):
+        visa = Visa.objects.filter(is_active=True)
+        serializer = VisaSerializer(visa, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = VisaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class VisaDetail(APIView):
+    """
+    Retrieve, update or delete a Visa instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Visa.objects.get(pk=pk)
+        except Visa.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        visa = self.get_object(pk)
+        if visa.is_active == False:
+            content = {'please move along': 'nothing to see here'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        serializer = VisaSerializer(visa)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        visa = self.get_object(pk)
+        serializer = VisaSerializer(visa, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        visa = self.get_object(pk)
+        if visa.is_active == True: 
+            visa.is_active = False
+            visa.save()
+        serializer = VisaSerializer(visa, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        print(serializer.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+ 
+# ------------ Fin Visa API
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Client API
+class ClientList(APIView):
+    """
+    List all Clients, or create a new Client.
+    """
+    def get(self, request, format=None):
+        client = Client.objects.filter(is_active=True)
+        serializer = ClientSerializer(client, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ClientSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class ClientDetail(APIView):
+    """
+    Retrieve, update or delete a Client instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Client.objects.get(pk=pk)
+        except Client.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        client = self.get_object(pk)
+        if client.is_active == False:
+            content = {'please move along': 'nothing to see here'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        serializer = ClientSerializer(client)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        client = self.get_object(pk)
+        serializer = ClientSerializer(client, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        client = self.get_object(pk)
+        if client.is_active == True: 
+            client.is_active = False
+            client.save()
+        serializer = ClientSerializer(client, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        print(serializer.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+ 
+# ------------ Fin Client API
+
+
+
 # class InsuranceViewSet(ModelViewSet):
 #     queryset = Insurance.objects.all()
 #     serializer_class = InsuranceSerializer
@@ -284,27 +650,27 @@ class OrganizedJourneyDetail(APIView):
 #     queryset = OrganizedJourney.objects.all()
 #     serializer_class = OrganizedJourneySerializer
 
-class OtherViewSet(ModelViewSet):
-    queryset = Other.objects.all()
-    serializer_class = OtherSerializer
+# class OtherViewSet(ModelViewSet):
+#     queryset = Other.objects.all()
+#     serializer_class = OtherSerializer
 
-class TempHotelReservationViewSet(ModelViewSet):
-    queryset = TempHotelReservation.objects.all()
-    serializer_class = TempHotelReservationSerializer
+# class TempHotelReservationViewSet(ModelViewSet):
+#     queryset = TempHotelReservation.objects.all()
+#     serializer_class = TempHotelReservationSerializer
 
-class TicketViewSet(ModelViewSet):
-    queryset = Ticket.objects.all()
-    serializer_class = TicketSerializer
+# class TicketViewSet(ModelViewSet):
+#     queryset = Ticket.objects.all()
+#     serializer_class = TicketSerializer
 
-class TravelHotelReservationViewSet(ModelViewSet):
-    queryset = TravelHotelReservation.objects.all()
-    serializer_class = TravelHotelReservationSerializer
+# class TravelHotelReservationViewSet(ModelViewSet):
+#     queryset = TravelHotelReservation.objects.all()
+#     serializer_class = TravelHotelReservationSerializer
 
-class VisaViewSet(ModelViewSet):
-    queryset = Visa.objects.all()
-    serializer_class = VisaSerializer
+# class VisaViewSet(ModelViewSet):
+#     queryset = Visa.objects.all()
+#     serializer_class = VisaSerializer
 
 
-class ClientViewSet(ModelViewSet):
-    queryset = Client.objects.all()
-    serializer_class = ClientSerializer
+# class ClientViewSet(ModelViewSet):
+#     queryset = Client.objects.all()
+#     serializer_class = ClientSerializer
