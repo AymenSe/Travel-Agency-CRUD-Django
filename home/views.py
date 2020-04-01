@@ -5,8 +5,11 @@ from home.models import *
 from home.serializers import *
 
 
+<<<<<<< HEAD
 # ---- views ---- #
 
+=======
+>>>>>>> 333c14544588785b90dd03043fbcc56d0b2c6fe3
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
