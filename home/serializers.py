@@ -1,10 +1,7 @@
 from rest_framework import serializers
 from home.models import *
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 
-class ServiceSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Service
-		fields = '__all__'
 
 
 class InsuranceSerializer(serializers.ModelSerializer):
@@ -54,3 +51,21 @@ class ClientSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Client
 		fields = '__all__'
+
+
+
+class ServiceSerializer(WritableNestedModelSerializer):
+	client = ClientSerializer(many=True) # m2m
+	insurance = InsuranceSerializer() # o2o
+	omra = OmraSerializer() # o2o
+	organized_journey = OrganizedJourneySerializer() # o2o
+	other = OtherSerializer() # o2o
+	temp_hotel_reservation = TempHotelReservationSerializer() # o2o
+	ticket = TicketSerializer() # o2o
+	travel_hotel_reservation = TravelHotelReservationSerializer() # o2o
+	visa = VisaSerializer() # o2o
+
+	class Meta:
+		model = Service
+		fields = '__all__'
+

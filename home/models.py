@@ -86,15 +86,15 @@ class Insurance(models.Model):
 
 # it's Oooook 
 class Omra(models.Model):
-    WITHFOOD = 'WF' # choice with food
-    WITHOUTFOOD = 'WIF' # choice without food
-    FOOD_CHOICES = [
-        (WITHFOOD, 'برنامج عمرة مع الأكل'),
-        (WITHOUTFOOD, 'برنامج عمرة بدون الأكل'),
-    ]
+    # WITHFOOD = 'WF' # choice with food
+    # WITHOUTFOOD = 'WIF' # choice without food
+    # FOOD_CHOICES = [
+    #     (WITHFOOD, 'برنامج عمرة مع الأكل'),
+    #     (WITHOUTFOOD, 'برنامج عمرة بدون الأكل'),
+    # ]
 
     # id = models.PositiveIntegerField(primary_key=True)
-    food_field = models.CharField(max_length=45, choices=FOOD_CHOICES, default=WITHFOOD, blank=True, null=True)  # +++++++++++++.
+    food_field = models.BooleanField(default=True)  # +++++++++++++.
     duration = models.PositiveIntegerField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     hotel_name = models.CharField(max_length=45, blank=True, null=True)
