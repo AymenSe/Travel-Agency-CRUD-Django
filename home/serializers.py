@@ -1,60 +1,60 @@
 from rest_framework import serializers
 from home.models import *
-from drf_writable_nested.serializers import WritableNestedModelSerializer
+from drf_writable_nested.serializers import WritableNestedModelSerializer, NestedUpdateMixin, NestedCreateMixin
 
 
 
-class InsuranceSerializer(serializers.ModelSerializer):
+class InsuranceSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
 		model = Insurance
 		fields = '__all__'
 
-class OmraSerializer(serializers.ModelSerializer):
+class OmraSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
 		model = Omra
 		fields = '__all__'
 
 
-class OrganizedJourneySerializer(serializers.ModelSerializer):
+class OrganizedJourneySerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
 		model = OrganizedJourney
 		fields = '__all__'
 
-class OtherSerializer(serializers.ModelSerializer):
+class OtherSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
 		model = Other
 		fields = '__all__'
 
 
-class TempHotelReservationSerializer(serializers.ModelSerializer):
+class TempHotelReservationSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
 		model = TempHotelReservation
 		fields = '__all__'
 
 
-class TicketSerializer(serializers.ModelSerializer):
+class TicketSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
 		model = Ticket
 		fields = '__all__'
 
-class TravelHotelReservationSerializer(serializers.ModelSerializer):
+class TravelHotelReservationSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
 		model = TravelHotelReservation
 		fields = '__all__'
 
-class VisaSerializer(serializers.ModelSerializer):
+class VisaSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
 		model = Visa
 		fields = '__all__'
 
-class ClientSerializer(serializers.ModelSerializer):
+class ClientSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
 		model = Client
 		fields = '__all__'
 
 
 
-class ServiceSerializer(WritableNestedModelSerializer):
+class ServiceSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	client = ClientSerializer(many=True) # m2m
 	insurance = InsuranceSerializer() # o2o
 	omra = OmraSerializer() # o2o
