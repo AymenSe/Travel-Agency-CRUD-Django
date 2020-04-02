@@ -158,7 +158,7 @@ class Service(models.Model):
     temp_ticket = models.BooleanField(blank=True, null=True)
     ticket = models.OneToOneField('Ticket', models.DO_NOTHING, blank=True, null=True)
     travel_hotel_reservation = models.OneToOneField('TravelHotelReservation', models.DO_NOTHING, blank=True, null=True)
-    visa = models.OneToOneField('Visa', models.DO_NOTHING, blank=True, null=True)
+    visa = models.OneToOneField('Visa', models.CASCADE, blank=True, null=True)
     visa_rdv = models.BooleanField(blank=True, null=True)
     visa_request_form = models.BooleanField(blank=True, null=True)
     client = models.ManyToManyField("Client")

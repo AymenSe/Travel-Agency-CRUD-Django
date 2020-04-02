@@ -4,7 +4,7 @@ from django.contrib import admin
 from home.models import * 
 
 
-# admin.site.register(Client) because when user add a service, he should adds a client 
+admin.site.register(Client) # because when user add a service, he should adds a client 
 admin.site.register(Service)
 # admin.site.register(ServiceClient)
 admin.site.register(Omra)
