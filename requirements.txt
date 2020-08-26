@@ -5,3 +5,4 @@ django-phone-field==1.8.0
 djangorestframework==3.11.0
 pip==20.0.2
 drf-writable-nested==0.5.4
+django-crum==0.7.7

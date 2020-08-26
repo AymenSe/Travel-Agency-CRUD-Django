@@ -67,5 +67,5 @@ class ServiceSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelS
 
 	class Meta:
 		model = Service
-		fields = '__all__'
+		fields = '__all__' 
 

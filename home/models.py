@@ -8,6 +8,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
+from crum import get_current_user # this for current user
 # from phone_field import PhoneField
 
 
@@ -147,9 +148,9 @@ class Payment(models.Model):
 
 
 class Service(models.Model):
-    user_iduser = models.ForeignKey(User, models.DO_NOTHING, db_column='User_idUser')  # Field name made lowercase.
+    user_iduser = models.ForeignKey(User, models.DO_NOTHING, default=get_current_user, db_column='User_idUser')  # Field name made lowercase.
     request_date = models.DateTimeField(blank=True, null=True)
-    country = CountryField(blank_label='(إختر الدولة)', blank=True, null=True)  # ++++++++++++++++++
+    country = CountryField(blank_label='(إختر الدولة)')  # ++++++++++++++++++
     insurance = models.OneToOneField(Insurance, models.DO_NOTHING, blank=True, null=True)
     omra = models.OneToOneField(Omra, models.DO_NOTHING, blank=True, null=True)
     organized_journey = models.OneToOneField(OrganizedJourney, models.DO_NOTHING, blank=True, null=True)
