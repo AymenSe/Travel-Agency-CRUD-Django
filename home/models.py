@@ -149,10 +149,10 @@ class Payment(models.Model):
 class Service(models.Model):
     user_iduser = models.ForeignKey(User, models.DO_NOTHING, db_column='User_idUser')  # Field name made lowercase.
     request_date = models.DateTimeField(blank=True, null=True)
-    country = CountryField(blank_label='(إختر الدولة)')  # ++++++++++++++++++
+    country = CountryField(blank_label='(إختر الدولة)', blank=True, null=True)  # ++++++++++++++++++
     insurance = models.OneToOneField(Insurance, models.DO_NOTHING, blank=True, null=True)
     omra = models.OneToOneField(Omra, models.DO_NOTHING, blank=True, null=True)
-    organized_journey = models.OneToOneField(OrganizedJourney, models.DO_NOTHING)
+    organized_journey = models.OneToOneField(OrganizedJourney, models.DO_NOTHING, blank=True, null=True)
     other = models.OneToOneField(Other, models.DO_NOTHING, blank=True, null=True)
     temp_hotel_reservation = models.OneToOneField('TempHotelReservation', models.DO_NOTHING, blank=True, null=True)
     temp_ticket = models.BooleanField(blank=True, null=True)

@@ -128,7 +128,7 @@ STATICFILES_DIRS = (
 
 
 
-# countries with replace Israel with Palstine 
+# countries with replace Israel to Palstine 
 COUNTRIES_OVERRIDE = {
     'PS': _('فلسطين'),
     'IL': None,

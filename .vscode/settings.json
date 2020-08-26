@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "C:\\Users\\Aymen\\Desktop\\env\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\Aymen\\Desktop\\env\\Scripts\\python.exe",
+    "git.ignoreLimitWarning": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
