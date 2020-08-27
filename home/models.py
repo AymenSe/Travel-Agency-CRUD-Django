@@ -295,10 +295,11 @@ class Inquiry(models.Model):
 # Add some tables! 
 
 class Country(models.Model):
-    name = models.CharField(max_length=45)
+    name = CountryField(blank_label='(إختر الدولة)')
     visa_rdv = models.BooleanField(default=False, blank=True, null=True)
     visa = models.BooleanField(default=False, blank=True, null=True)
     organized_trip = models.BooleanField(default=False, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -309,9 +310,11 @@ class Country(models.Model):
 
 class Region(models.Model):
     name = models.CharField(max_length=45)
+    country = models.ForeignKey(Country, models.DO_NOTHING)
     visa_rdv = models.BooleanField(default=False, blank=True, null=True)
     visa = models.BooleanField(default=False, blank=True, null=True)
     organized_trip = models.BooleanField(default=False, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
@@ -322,10 +325,12 @@ class Region(models.Model):
 
 class City(models.Model):
     name = models.CharField(max_length=45)
+    region = models.ForeignKey(Region, models.DO_NOTHING)
     visa_rdv = models.BooleanField(default=False, blank=True, null=True)
     visa = models.BooleanField(default=False, blank=True, null=True)
     organized_trip = models.BooleanField(default=False, blank=True, null=True)
-
+    is_active = models.BooleanField(default=True)
+    
     class Meta:
         managed = True
         db_table = 'City'

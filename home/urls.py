@@ -59,10 +59,21 @@ urlpatterns = [
     path('visas/', views.VisaList.as_view(), name="visas"),
     path('visas/<int:pk>/', views.VisaDetail.as_view()), 
 
-
     # clients api urls
     path('clients/', views.ClientList.as_view(), name="clients"),
     path('clients/<int:pk>/', views.ClientDetail.as_view()),  
+
+    # countries api urls
+    path('countries/', views.CountryList.as_view(), name="countries"),
+    path('countries/<int:pk>/', views.CountryDetail.as_view()),  
+
+    # regions api urls
+    path('regions/', views.RegionList.as_view(), name="regions"),
+    path('regions/<int:pk>/', views.RegionDetail.as_view()),  
+
+    # cities api urls
+    path('cities/', views.CityList.as_view(), name="cities"),
+    path('cities/<int:pk>/', views.CityDetail.as_view()),  
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

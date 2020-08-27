@@ -52,7 +52,22 @@ class ClientSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSe
 		model = Client
 		fields = '__all__'
 
+class CountrySerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
+	class Meta:
+		model = Country
+		fields = '__all__'
 
+class RegionSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
+	country = CountrySerializer(required=False)
+	class Meta:
+		model = Region
+		fields = '__all__'
+
+class CitySerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
+	region = RegionSerializer(required=False)
+	class Meta:
+		model = City
+		fields = '__all__'
 
 class ServiceSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	client = ClientSerializer(many=True) # m2m
