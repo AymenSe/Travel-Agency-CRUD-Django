@@ -163,6 +163,8 @@ class Service(models.Model):
     visa_rdv = models.BooleanField(blank=True, null=True)
     visa_request_form = models.BooleanField(blank=True, null=True)
     client = models.ManyToManyField("Client")
+    main_price = models.FloatField(blank=True, null=True)
+    final_price = models.FloatField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
 
