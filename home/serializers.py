@@ -26,10 +26,10 @@ class OtherSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSer
 		fields = '__all__'
 
 
-class TempHotelReservationSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
-	class Meta:
-		model = TempHotelReservation
-		fields = '__all__'
+# class TempHotelReservationSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
+# 	class Meta:
+# 		model = TempHotelReservation
+# 		fields = '__all__'
 
 
 class TicketSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
@@ -75,7 +75,7 @@ class ServiceSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelS
 	omra = OmraSerializer(required=False) # o2o
 	organized_journey = OrganizedJourneySerializer(required=False) # o2o
 	other = OtherSerializer(required=False) # o2o
-	temp_hotel_reservation = TempHotelReservationSerializer(required=False) # o2o
+#	temp_hotel_reservation = TempHotelReservationSerializer(required=False) # o2o
 	ticket = TicketSerializer(required=False) # o2o
 	travel_hotel_reservation = TravelHotelReservationSerializer(required=False) # o2o
 	visa = VisaSerializer(required=False) # o2o

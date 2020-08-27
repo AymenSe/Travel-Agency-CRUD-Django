@@ -337,62 +337,62 @@ class OtherDetail(APIView):
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 
-# TempHotelReservation API
-class TempHotelReservationList(APIView):
-    """
-    List all TempHotelReservations, or create a new TempHotelReservation.
-    """
-    def get(self, request, format=None):
-        temp_hotel_reservation = TempHotelReservation.objects.filter(is_active=True)
-        serializer = TempHotelReservationSerializer(temp_hotel_reservation, many=True)
-        return Response(serializer.data)
+# # TempHotelReservation API
+# class TempHotelReservationList(APIView):
+#     """
+#     List all TempHotelReservations, or create a new TempHotelReservation.
+#     """
+#     def get(self, request, format=None):
+#         temp_hotel_reservation = TempHotelReservation.objects.filter(is_active=True)
+#         serializer = TempHotelReservationSerializer(temp_hotel_reservation, many=True)
+#         return Response(serializer.data)
 
-    def post(self, request, format=None):
-        serializer = TempHotelReservationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def post(self, request, format=None):
+#         serializer = TempHotelReservationSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class TempHotelReservationDetail(APIView):
-    """
-    Retrieve, update or delete a TempHotelReservation instance.
-    """
-    def get_object(self, pk):
-        try:
-            return TempHotelReservation.objects.get(pk=pk)
-        except TempHotelReservation.DoesNotExist:
-            raise Http404
+# class TempHotelReservationDetail(APIView):
+#     """
+#     Retrieve, update or delete a TempHotelReservation instance.
+#     """
+#     def get_object(self, pk):
+#         try:
+#             return TempHotelReservation.objects.get(pk=pk)
+#         except TempHotelReservation.DoesNotExist:
+#             raise Http404
 
-    def get(self, request, pk, format=None):
-        temp_hotel_reservation = self.get_object(pk)
-        if temp_hotel_reservation.is_active == False:
-            content = {'please move along': 'nothing to see here'}
-            return Response(content, status=status.HTTP_404_NOT_FOUND)
-        serializer = TempHotelReservationSerializer(temp_hotel_reservation)
-        return Response(serializer.data)
+#     def get(self, request, pk, format=None):
+#         temp_hotel_reservation = self.get_object(pk)
+#         if temp_hotel_reservation.is_active == False:
+#             content = {'please move along': 'nothing to see here'}
+#             return Response(content, status=status.HTTP_404_NOT_FOUND)
+#         serializer = TempHotelReservationSerializer(temp_hotel_reservation)
+#         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
-        temp_hotel_reservation = self.get_object(pk)
-        serializer = TempHotelReservationSerializer(temp_hotel_reservation, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def put(self, request, pk, format=None):
+#         temp_hotel_reservation = self.get_object(pk)
+#         serializer = TempHotelReservationSerializer(temp_hotel_reservation, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        temp_hotel_reservation = self.get_object(pk)
-        if temp_hotel_reservation.is_active == True: 
-            temp_hotel_reservation.is_active = False
-            temp_hotel_reservation.save()
-        serializer = TempHotelReservationSerializer(temp_hotel_reservation, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        print(serializer.data)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     def delete(self, request, pk, format=None):
+#         temp_hotel_reservation = self.get_object(pk)
+#         if temp_hotel_reservation.is_active == True: 
+#             temp_hotel_reservation.is_active = False
+#             temp_hotel_reservation.save()
+#         serializer = TempHotelReservationSerializer(temp_hotel_reservation, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#         print(serializer.data)
+#         return Response(status=status.HTTP_204_NO_CONTENT)
  
-# ------------ Fin TempHotelReservation API
+# # ------------ Fin TempHotelReservation API
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

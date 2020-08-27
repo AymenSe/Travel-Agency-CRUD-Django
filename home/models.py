@@ -143,19 +143,27 @@ class Payment(models.Model):
 
 
 class Service(models.Model):
+
+    VOUCHER = 'voucher'
+    NORMAL = 'normal' 
+    CHOICES = [
+        (VOUCHER, 'فاتورة'),
+        (NORMAL, 'عادي'),
+    ]
+
     user_iduser = models.ForeignKey(User, models.DO_NOTHING, default=get_current_user, db_column='User_idUser')  # Field name made lowercase.
-    request_date = models.DateTimeField(blank=True, null=True)
+    request_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     country = CountryField(blank_label='(إختر الدولة)', blank=True, null=True)  # ++++++++++++++++++
     insurance = models.OneToOneField(Insurance, models.DO_NOTHING, blank=True, null=True)
     omra = models.OneToOneField(Omra, models.DO_NOTHING, blank=True, null=True)
     organized_journey = models.OneToOneField(OrganizedJourney, models.DO_NOTHING, blank=True, null=True)
     other = models.OneToOneField(Other, models.DO_NOTHING, blank=True, null=True)
-    temp_hotel_reservation = models.OneToOneField('TempHotelReservation', models.DO_NOTHING, blank=True, null=True)
     temp_ticket = models.BooleanField(blank=True, null=True)
     ticket = models.OneToOneField('Ticket', models.DO_NOTHING, blank=True, null=True)
+    temp_hotel_reservation = models.CharField(max_length=45, choices=CHOICES, default=NORMAL)
     travel_hotel_reservation = models.OneToOneField('TravelHotelReservation', models.DO_NOTHING, blank=True, null=True)
     visa = models.OneToOneField('Visa', models.CASCADE, blank=True, null=True)
-    visa_rdv = models.BooleanField(blank=True, null=True)
+    visa_rdv = CountryField(blank_label='(إختر الدولة)', blank=True, null=True)
     visa_request_form = models.BooleanField(blank=True, null=True)
     client = models.ManyToManyField("Client")
     main_price = models.FloatField(blank=True, null=True)
@@ -184,15 +192,15 @@ class Service(models.Model):
 #         unique_together = (('id_service', 'id_user', 'id_client'),) # , 'id'
 
 
-class TempHotelReservation(models.Model):
-#   id = models.PositiveIntegerField(primary_key=True)
-    type_of = models.CharField(max_length=7)
-    is_active = models.BooleanField(default=True)
+# class TempHotelReservation(models.Model):
+# #   id = models.PositiveIntegerField(primary_key=True)
+#     type_of = models.CharField(max_length=7)
+#     is_active = models.BooleanField(default=True)
 
 
-    class Meta:
-        managed = True
-        db_table = 'temp_hotel_reservation'
+#     class Meta:
+#         managed = True
+#         db_table = 'temp_hotel_reservation'
 
 
 # class TempTicket(models.Model):
@@ -330,7 +338,7 @@ class City(models.Model):
     visa = models.BooleanField(default=False, blank=True, null=True)
     organized_trip = models.BooleanField(default=False, blank=True, null=True)
     is_active = models.BooleanField(default=True)
-    
+
     class Meta:
         managed = True
         db_table = 'City'
