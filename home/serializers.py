@@ -56,14 +56,14 @@ class ClientSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSe
 
 class ServiceSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	client = ClientSerializer(many=True) # m2m
-	insurance = InsuranceSerializer() # o2o
-	omra = OmraSerializer() # o2o
-	organized_journey = OrganizedJourneySerializer() # o2o
-	other = OtherSerializer() # o2o
-	temp_hotel_reservation = TempHotelReservationSerializer() # o2o
-	ticket = TicketSerializer() # o2o
-	travel_hotel_reservation = TravelHotelReservationSerializer() # o2o
-	visa = VisaSerializer() # o2o
+	insurance = InsuranceSerializer(required=False) # o2o
+	omra = OmraSerializer(required=False) # o2o
+	organized_journey = OrganizedJourneySerializer(required=False) # o2o
+	other = OtherSerializer(required=False) # o2o
+	temp_hotel_reservation = TempHotelReservationSerializer(required=False) # o2o
+	ticket = TicketSerializer(required=False) # o2o
+	travel_hotel_reservation = TravelHotelReservationSerializer(required=False) # o2o
+	visa = VisaSerializer(required=False) # o2o
 
 	class Meta:
 		model = Service

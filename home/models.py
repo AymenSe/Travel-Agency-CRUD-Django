@@ -54,8 +54,8 @@ class Refund(models.Model):
 
 class Client(models.Model):
     idclient = models.AutoField(db_column='idClient', primary_key=True)  # Field name made lowercase.
-    name_ar = models.CharField(db_column='ClienFirstname_Ar', max_length=90)  # Field name made lowercase.
-    name_fr = models.CharField(db_column='LastName_Ar', max_length=90)  # Field name made lowercase.
+    name_ar = models.CharField(db_column='name_ar', max_length=90)  # Field name made lowercase.
+    name_fr = models.CharField(db_column='name_fr', max_length=90)  # Field name made lowercase.
     passeport_id = models.CharField(db_column='Passeport_id', unique=True, max_length=45, blank=True, null=True)  # Field name made lowercase.
     telephonenb = models.PositiveIntegerField(db_column='TelephoneNb')  # Field name made lowercase.
     e_mail_fabebook = models.CharField(db_column='E-mail/Fabebook', unique=True, max_length=45)  # Field name made lowercase. Field renamed to remove unsuitable characters.
@@ -145,7 +145,7 @@ class Payment(models.Model):
 class Service(models.Model):
     user_iduser = models.ForeignKey(User, models.DO_NOTHING, default=get_current_user, db_column='User_idUser')  # Field name made lowercase.
     request_date = models.DateTimeField(blank=True, null=True)
-    country = CountryField(blank_label='(إختر الدولة)')  # ++++++++++++++++++
+    country = CountryField(blank_label='(إختر الدولة)', blank=True, null=True)  # ++++++++++++++++++
     insurance = models.OneToOneField(Insurance, models.DO_NOTHING, blank=True, null=True)
     omra = models.OneToOneField(Omra, models.DO_NOTHING, blank=True, null=True)
     organized_journey = models.OneToOneField(OrganizedJourney, models.DO_NOTHING, blank=True, null=True)
