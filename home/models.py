@@ -95,7 +95,7 @@ class Omra(models.Model):
     # ]
 
     # id = models.PositiveIntegerField(primary_key=True)
-    food_field = models.BooleanField(default=True)  # +++++++++++++.
+    food_field = models.BooleanField(default=True, blank=True, null=True)  # +++++++++++++.
     duration = models.PositiveIntegerField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     hotel_name = models.CharField(max_length=45, blank=True, null=True)
@@ -285,7 +285,7 @@ class Inquiry(models.Model):
     email = models.EmailField(max_length=254, blank=True, null=True)
     Service = models.CharField(max_length=45)
     inquirycol = models.CharField(max_length=50)
-    answered = models.BooleanField()
+    answered = models.BooleanField(default=False, blank=True, null=True)
     comments = models.TextField(blank=True, null=True) 
     is_active = models.BooleanField(default=True)
 
@@ -296,3 +296,45 @@ class Inquiry(models.Model):
 
     def __str__(self):
         return f'inquiry of client {self.first_name} {self.last_name}'
+
+# Add some tables! 
+
+class Country(models.Model):
+    name = models.CharField(max_length=45)
+    visa_rdv = models.BooleanField(default=False, blank=True, null=True)
+    visa = models.BooleanField(default=False, blank=True, null=True)
+    organized_trip = models.BooleanField(default=False, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Country'
+
+    def __str__(self):
+        return f'Country: {self.name}'
+
+class Region(models.Model):
+    name = models.CharField(max_length=45)
+    visa_rdv = models.BooleanField(default=False, blank=True, null=True)
+    visa = models.BooleanField(default=False, blank=True, null=True)
+    organized_trip = models.BooleanField(default=False, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Region'
+
+    def __str__(self):
+        return f'Region: {self.name}'  
+
+class City(models.Model):
+    name = models.CharField(max_length=45)
+    visa_rdv = models.BooleanField(default=False, blank=True, null=True)
+    visa = models.BooleanField(default=False, blank=True, null=True)
+    organized_trip = models.BooleanField(default=False, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'City'
+
+    def __str__(self):
+        return f'City: {self.name}'
+    
