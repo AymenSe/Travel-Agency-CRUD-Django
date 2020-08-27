@@ -54,24 +54,19 @@ class Refund(models.Model):
 
 class Client(models.Model):
     idclient = models.AutoField(db_column='idClient', primary_key=True)  # Field name made lowercase.
-    clienfirstname_ar = models.CharField(db_column='ClienFirstname_Ar', max_length=45)  # Field name made lowercase.
-    lastname_ar = models.CharField(db_column='LastName_Ar', max_length=45)  # Field name made lowercase.
-    firstname_fr = models.CharField(db_column='Firstname_Fr', max_length=45)  # Field name made lowercase.
-    lastname_fr = models.CharField(db_column='LastName_Fr', max_length=45)  # Field name made lowercase.
+    name_ar = models.CharField(db_column='ClienFirstname_Ar', max_length=90)  # Field name made lowercase.
+    name_fr = models.CharField(db_column='LastName_Ar', max_length=90)  # Field name made lowercase.
     passeport_id = models.CharField(db_column='Passeport_id', unique=True, max_length=45, blank=True, null=True)  # Field name made lowercase.
     telephonenb = models.PositiveIntegerField(db_column='TelephoneNb')  # Field name made lowercase.
     e_mail_fabebook = models.CharField(db_column='E-mail/Fabebook', unique=True, max_length=45)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    date_place_of_birth = models.CharField(db_column='Date/Place_of_Birth', max_length=45)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    user_iduser = models.ForeignKey(User, models.DO_NOTHING, db_column='User_idUser')  # Field name made lowercase.
     is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
         db_table = 'client'
-        unique_together = (('idclient', 'user_iduser'),)
     
     def __str__(self):
-        return f'{self.firstname_fr} {self.lastname_fr}'
+        return f'{self.name_fr}'
 
 
 # it's Oooook
