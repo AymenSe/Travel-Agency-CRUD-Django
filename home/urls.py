@@ -74,6 +74,10 @@ urlpatterns = [
     # cities api urls
     path('cities/', views.CityList.as_view(), name="cities"),
     path('cities/<int:pk>/', views.CityDetail.as_view()),  
+
+    # payments api urls
+    path('payments/', views.PaymentList.as_view(), name="payments"),
+    path('payments/<int:pk>/', views.PaymentDetail.as_view()),  
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

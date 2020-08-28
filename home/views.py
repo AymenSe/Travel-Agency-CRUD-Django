@@ -640,6 +640,67 @@ class ClientDetail(APIView):
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+# Payment API
+class PaymentList(APIView):
+    """
+    List all Payments, or create a new Payment.
+    """
+    def get(self, request, format=None):
+        payment = Payment.objects.filter(is_active=True)
+        serializer = PaymentSerializer(payment, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = PaymentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class PaymentDetail(APIView):
+    """
+    Retrieve, update or delete a Payment instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Payment.objects.get(pk=pk)
+        except Payment.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        payment = self.get_object(pk)
+        if payment.is_active == False:
+            content = {'please move along': 'nothing to see here'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        serializer = PaymentSerializer(payment)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        payment = self.get_object(pk)
+        serializer = PaymentSerializer(payment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        payment = self.get_object(pk)
+        if payment.is_active == True: 
+            payment.is_active = False
+            payment.save()
+        serializer = PaymentSerializer(payment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        print(serializer.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+ 
+# ------------ Fin Payment API
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 # Country API
 class CountryList(APIView):
     """

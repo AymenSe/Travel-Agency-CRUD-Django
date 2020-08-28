@@ -3,6 +3,11 @@ from home.models import *
 from drf_writable_nested.serializers import WritableNestedModelSerializer, NestedUpdateMixin, NestedCreateMixin
 
 
+class PaymentSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
+	class Meta:
+		model = Payment
+		fields = ('sum_payment',)
+
 
 class InsuranceSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelSerializer):
 	class Meta:
@@ -79,6 +84,7 @@ class ServiceSerializer(NestedCreateMixin ,NestedUpdateMixin, serializers.ModelS
 	ticket = TicketSerializer(required=False) # o2o
 	travel_hotel_reservation = TravelHotelReservationSerializer(required=False) # o2o
 	visa = VisaSerializer(required=False) # o2o
+	paid_price = PaymentSerializer(required=False)
 
 	class Meta:
 		model = Service

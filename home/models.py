@@ -56,9 +56,9 @@ class Client(models.Model):
     idclient = models.AutoField(db_column='idClient', primary_key=True)  # Field name made lowercase.
     name_ar = models.CharField(db_column='name_ar', max_length=90)  # Field name made lowercase.
     name_fr = models.CharField(db_column='name_fr', max_length=90)  # Field name made lowercase.
-    passeport_id = models.CharField(db_column='Passeport_id', unique=True, max_length=45, blank=True, null=True)  # Field name made lowercase.
-    telephonenb = models.PositiveIntegerField(db_column='TelephoneNb')  # Field name made lowercase.
-    e_mail_fabebook = models.CharField(db_column='E-mail/Fabebook', unique=True, max_length=45)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    passport_id = models.CharField(db_column='Passeport_id', unique=True, max_length=45, blank=True, null=True)  # Field name made lowercase.
+    telephone = models.CharField(db_column='TelephoneNb', max_length=45, default = None)  # Field name made lowercase.
+    e_mail_facebook = models.CharField(db_column='E-mail/Fabebook', unique=True, max_length=45)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     is_active = models.BooleanField(default=True)
 
     class Meta:
@@ -72,7 +72,7 @@ class Client(models.Model):
 # it's Oooook
 class Insurance(models.Model):
     # id = models.PositiveIntegerField(primary_key=True)
-    number = models.PositiveIntegerField(blank=True, null=True)
+    number = models.CharField(max_length=45, blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
     class Meta:
@@ -90,12 +90,12 @@ class Omra(models.Model):
     # ]
 
     # id = models.PositiveIntegerField(primary_key=True)
-    food_field = models.BooleanField(default=True, blank=True, null=True)  # +++++++++++++.
+    food = models.BooleanField(default=None, blank=True, null=True)  # +++++++++++++.
     duration = models.PositiveIntegerField(blank=True, null=True)
-    start_date = models.DateField(blank=True, null=True)
-    hotel_name = models.CharField(max_length=45, blank=True, null=True)
-    area = models.CharField(max_length=45, blank=True, null=True)
-    distance_from_haram = models.PositiveIntegerField(blank=True, null=True)
+    start_date = models.DateField(auto_now_add=True, blank=True, null=True)
+    hotel_name = models.CharField(max_length=90, blank=True, null=True)
+#    area = models.CharField(max_length=45, blank=True, null=True)
+#    distance_from_haram = models.PositiveIntegerField(blank=True, null=True)
     room_size = models.PositiveIntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
@@ -108,7 +108,7 @@ class OrganizedJourney(models.Model):
     # id = models.PositiveIntegerField(primary_key=True)
     country = CountryField(blank_label='(إختر الدولة)')  # ++++++++++++++++++
     duration = models.PositiveIntegerField(blank=True, null=True)
-    start_date = models.DateField(blank=True, null=True)
+    start_date = models.DateField(auto_now_add=True, blank=True, null=True)
     room_type = models.PositiveIntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
@@ -129,17 +129,17 @@ class Other(models.Model):
 
 
 class Payment(models.Model):
-    id_payment = models.AutoField(db_column='Id_Payment', primary_key=True)  # Field name made lowercase.
+#    id_payment = models.AutoField(db_column='Id_Payment', primary_key=True)  # Field name made lowercase.
     sum_payment = models.PositiveIntegerField()
-    date = models.DateField()
-    id_service = models.ForeignKey('Service', models.DO_NOTHING, db_column='id_service')
-    user_iduser = models.ForeignKey(User, models.DO_NOTHING, db_column='User_idUser')  # Field name made lowercase.
+    date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+#    id_service = models.ForeignKey('Service', models.DO_NOTHING, db_column='id_service')
+#    user_iduser = models.ForeignKey(User, models.DO_NOTHING, default=get_current_user, db_column='User_idUser')  # Field name made lowercase.
     is_active = models.BooleanField(default=True)
 
     class Meta:
         managed = True
         db_table = 'payment'
-        unique_together = (('id_payment', 'id_service', 'user_iduser'),)
+#        unique_together = (('id_payment', 'id_service', 'user_iduser'),)
 
 
 class Service(models.Model):
@@ -153,10 +153,10 @@ class Service(models.Model):
 
     user_iduser = models.ForeignKey(User, models.DO_NOTHING, default=get_current_user, db_column='User_idUser')  # Field name made lowercase.
     request_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    country = CountryField(blank_label='(إختر الدولة)', blank=True, null=True)  # ++++++++++++++++++
+#    country = CountryField(blank_label='(إختر الدولة)', blank=True, null=True)  # ++++++++++++++++++
     insurance = models.OneToOneField(Insurance, models.DO_NOTHING, blank=True, null=True)
     omra = models.OneToOneField(Omra, models.DO_NOTHING, blank=True, null=True)
-    organized_journey = models.OneToOneField(OrganizedJourney, models.DO_NOTHING, blank=True, null=True)
+    organized_trip = models.OneToOneField(OrganizedJourney, models.DO_NOTHING, blank=True, null=True)
     other = models.OneToOneField(Other, models.DO_NOTHING, blank=True, null=True)
     temp_ticket = models.BooleanField(blank=True, null=True)
     ticket = models.OneToOneField('Ticket', models.DO_NOTHING, blank=True, null=True)
@@ -168,6 +168,7 @@ class Service(models.Model):
     client = models.ManyToManyField("Client")
     main_price = models.FloatField(blank=True, null=True)
     final_price = models.FloatField(blank=True, null=True)
+    paid_price = models.ForeignKey('Payment', models.DO_NOTHING)
     is_active = models.BooleanField(default=True)
 
 
@@ -177,7 +178,7 @@ class Service(models.Model):
         unique_together = (('id', 'user_iduser'),)
 
     def __str__(self):
-        return f'service to client {self.country}'
+        return f'service to client {self.request_date}'
 
 
 # class ServiceClient(models.Model):
