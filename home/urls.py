@@ -47,9 +47,9 @@ urlpatterns = [
 #     path('temphotelreservations/', views.TempHotelReservationList.as_view(), name="temphotelreservations"),
 #     path('temphotelreservations/<int:pk>/', views.TempHotelReservationDetail.as_view()),
  
-    # tickets api urls
-    path('tickets/', views.TicketList.as_view(), name="tickets"),
-    path('tickets/<int:pk>/', views.TicketDetail.as_view()),
+    # # tickets api urls
+    # path('tickets/', views.TicketList.as_view(), name="tickets"),
+    # path('tickets/<int:pk>/', views.TicketDetail.as_view()),
 
     # travelhotelreservations api urls
     path('travelhotelreservations/', views.TravelHotelReservationList.as_view(), name="travelhotelreservations"),
