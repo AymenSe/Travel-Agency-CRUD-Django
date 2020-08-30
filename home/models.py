@@ -197,7 +197,7 @@ class TravelHotelReservation(models.Model):
 class Visa(models.Model):
 #   id = models.PositiveIntegerField(primary_key=True)
     duration = models.PositiveIntegerField(blank=True, null=True)
-    single_visit = models.PositiveIntegerField(db_column='single_voyage?', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    single_visit = models.BooleanField(default=True, blank=True, null=True) 
     country = CountryField(blank_label='(إختر الدولة)', default='PS') # ++++++++++++++++++
     is_active = models.BooleanField(default=True)
 
